@@ -2,21 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import ChartWrapper from './ChartWrapper';
-import {Container, Row, Navbar, Col} from 'react-bootstrap';
+import App from './App';
+import './App.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Navbar bg="light">
-      <Navbar.Brand>Barchartly</Navbar.Brand>
-    </Navbar>
-    <Container>
-      <Row>
-        <Col xs={12}>
-          <ChartWrapper />
-        </Col>
-      </Row>
-    </Container>
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

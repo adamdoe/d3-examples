@@ -1,17 +1,20 @@
 import React, {useRef, useEffect} from 'react';
 import D3Chart from './D3Chart';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
-const ChartWrapper = () => {
+const ChartWrapper = ({gender}) => {
+	const [storedChart, setStoredChart] = React.useState(true);
 	const chart = useRef();
 
 	useEffect(() => {
-		console.log('chart', chart.current)
-		new D3Chart(chart.current);
-	}, [chart])
+		
+		if(!chart.current.children || chart.current.children.length === 0) {
+			setStoredChart( new D3Chart(chart.current, gender) );
+		} else {
+			storedChart.update(gender);
+		}
+
+
+	}, [chart, gender])
 
 
 	const CHART_STYLES = {
@@ -19,15 +22,11 @@ const ChartWrapper = () => {
 		justifyContent: 'center'
 	}
 
-	return ( 
-		<Container>
-			<Row>
-				<Col xs={12}>
-					<div id="chart" ref={chart} style={CHART_STYLES}></div>
-				</Col>
-			</Row>
-		</Container>
-	 );
+	
+	return (
+		<div id="chart" ref={chart} style={CHART_STYLES}></div>
+	)
+
 }
  
 export default ChartWrapper;
