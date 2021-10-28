@@ -1,11 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
-import ChartWrapper from './ChartWrapper'
+import ChartWrapper from './ChartWrapper';
 
 function App() {
   return (
     <div className="App">
-        <ChartWrapper />
+        <Container>
+          <Row>
+            <Col xs={12}>
+              <ChartWrapper />
+            </Col>
+          </Row>
     </div>
   );
 }

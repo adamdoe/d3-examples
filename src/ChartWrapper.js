@@ -1,5 +1,9 @@
 import React, {useRef, useEffect} from 'react';
 import D3Chart from './D3Chart';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ChartWrapper = () => {
 	const chart = useRef();
@@ -9,8 +13,20 @@ const ChartWrapper = () => {
 		new D3Chart(chart.current);
 	}, [chart])
 
+
+	const CHART_STYLES = {
+		display: 'flex',
+		justifyContent: 'center'
+	}
+
 	return ( 
-		<div id="chart" ref={chart}></div>
+		<Container>
+			<Row>
+				<Col xs={12}>
+					<div id="chart" ref={chart} style={CHART_STYLES}></div>
+				</Col>
+			</Row>
+		</Container>
 	 );
 }
  
