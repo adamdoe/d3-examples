@@ -1,11 +1,23 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import ChartWrapper from './ChartWrapper';
+import ScatterPlotWrapper from './ScatterPlotWrapper';
 import {Dropdown, Container, Row, Navbar, Col} from 'react-bootstrap';
-
 
 function App() {
 
+  // TODO: move scatterplot data eventually
+  const [scatterPlotData, setScatterPlotData] = useState(null)
 	const [genderSelected, setGenderSelected] = React.useState('male')
+
+  // TODO: move scatterplot data eventually
+  useEffect(() => {
+    fetch('./data/children.json')
+      .then(res => res.json() )
+      .then( data => setScatterPlotData(data) )
+      .catch(error => console.log(error));
+  }, [])
+
+  console.log('Scatter Plot Data', scatterPlotData)
 
   return (
     <div className="App">
@@ -35,6 +47,13 @@ function App() {
             <ChartWrapper gender={genderSelected} />
           </Col>
         </Row>
+        {scatterPlotData &&
+          <Row>
+            <Col xs={12}>
+              <ScatterPlotWrapper data={scatterPlotData} />
+            </Col>
+          </Row>
+        }
       </Container>
     </div>
   );
