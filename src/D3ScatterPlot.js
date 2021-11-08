@@ -21,7 +21,6 @@ export default class D3ScatterPlot {
 
 
 		vis.data = data;
-		console.log('VIS DATA', vis.data)
 
 		vis.g = d3.select(element)
 			.append("svg")
@@ -56,7 +55,6 @@ export default class D3ScatterPlot {
 			.attr("text-anchor", "middle")
 			.text("Height in cm")
 
-		console.log('visY', vis.y(6))
 		vis.update( data );
 	}
 
