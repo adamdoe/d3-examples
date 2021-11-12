@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import ChartWrapper from './ChartWrapper';
-import ScatterPlotWrapper from './ScatterPlotWrapper';
-import { Dropdown, Container, Row, Navbar, Col } from 'react-bootstrap';
+import ChartWrapper from './Components/Chart/ChartWrapper';
+import ScatterPlotWrapper from './Components/ScatterPlot/ScatterPlotWrapper';
+import Map from './Components/Map/MapWrapper';
+import Home from './Components/Home';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { Container, Row, Navbar, Col, Nav } from 'react-bootstrap';
 
 function App() {
 	// TODO: move scatterplot data eventually
 	const [scatterPlotData, setScatterPlotData] = useState(null);
-	const [genderSelected, setGenderSelected] = React.useState('male');
 
 	// TODO: move scatterplot data eventually
 	useEffect(() => {
@@ -20,42 +22,44 @@ function App() {
 
 	return (
 		<div className='App'>
-			<Navbar bg='light' expanded='false' expand='false'>
+			<Router>
+				<Navbar bg='light' expanded='false' expand='false'>
+					<Container>
+						<Row>
+							<Col xs={12}>
+								<div className='d-flex flex-nowrap justify-content-between'>
+									<Nav.Link as={Link} to='/'>
+										<Navbar.Brand> DavaViz Examples </Navbar.Brand>
+									</Nav.Link>
+									<Nav.Link as={Link} to='/bar-chart'>
+										Bar Chart
+									</Nav.Link>
+									<Nav.Link as={Link} to='/scatter-plot'>
+										Scatter Plot
+									</Nav.Link>
+									<Nav.Link as={Link} to='/map'>
+										Map
+									</Nav.Link>
+								</div>
+							</Col>
+						</Row>
+					</Container>
+				</Navbar>
+
 				<Container>
-					<Row>
-						<Col xs={12}>
-							<div className='d-flex flex-nowrap justify-content-between'>
-								<Navbar.Brand> Bar Charts </Navbar.Brand>{' '}
-								<Dropdown>
-									<Dropdown.Toggle variant='primary' id='dropdown-basic'>
-										Please select gender
-									</Dropdown.Toggle>
-									<Dropdown.Menu>
-										<Dropdown.Item eventKey='male' onClick={() => setGenderSelected('male')}>
-											Male
-										</Dropdown.Item>
-										<Dropdown.Item eventKey='female' onClick={() => setGenderSelected('female')}>
-											Female
-										</Dropdown.Item>
-									</Dropdown.Menu>
-								</Dropdown>
-							</div>
-						</Col>
-					</Row>
+					<Routes>
+						<Route exact path='/' element={<Home />} />
+						<Route path='/bar-chart' element={<ChartWrapper />} />
+						<Route path='/scatter-plot' element={<ScatterPlotWrapper data={scatterPlotData} />} />
+						<Route path='/map' element={<Map />} />
+						<Route
+							render={function () {
+								return <p>Not found</p>;
+							}}
+						/>
+					</Routes>
 				</Container>
-			</Navbar>
-			<Container>
-				<Row>
-					<Col xs={12}> {/* <ChartWrapper gender={genderSelected} /> */} </Col>{' '}
-				</Row>
-				{scatterPlotData && (
-					<Row>
-						<Col xs={12}>
-							<ScatterPlotWrapper data={scatterPlotData} />{' '}
-						</Col>
-					</Row>
-				)}
-			</Container>
+			</Router>
 		</div>
 	);
 }

@@ -6,6 +6,7 @@ const CHART_WIDTH = 800 - CHART_MARGIN.right - CHART_MARGIN.left;
 const CHART_HEIGHT = 500 - CHART_MARGIN.top - CHART_MARGIN.bottom;
 const CHART_XAXIS_LABEL = 'Worlds Tallest Men';
 const CHART_YAXIS_LABEL = 'Height(cm)';
+
 export default class D3Chart {
 	constructor(element, gender) {
 
