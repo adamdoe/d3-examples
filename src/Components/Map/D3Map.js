@@ -9,20 +9,6 @@ class D3Map {
 	constructor(element) {
 		const vis = this;
 
-		var click = function(d) {
-			console.log('clicked', this)
-			//vis.mexico.attr('fill-opacity', 0.2); // Another update!
-			//d3.select('#' + geoID(d)).attr('fill-opacity', 1);
-			console.log('d', d)
-
-		};
-
-		var geoID = function(d) {
-			//return "c" + d;
-			console.log('d', d.target)
-			// d.target.attr('red')
-		};
-		
 		vis.fetchUrl = './data/geo-data.json';
 		vis.mexico = {};
 		vis.color = d3.scaleLinear().domain([0,33]).range(['tan', 'darkgreen']);
@@ -61,17 +47,32 @@ class D3Map {
 			vis.mexico.enter()
 				.append('path')
 				.attr('d', vis.path)
+				.attr('style', 'cursor: pointer')
+				.attr('id', (d) =>  'c' + d.properties.ID_1 )
 				.attr('fill', function(d,i) {return vis.color(i)})
 				.attr('stroke', '#000000')
 				.on("click", (d,i)  => {
 					console.log('d', d)
-					console.log('i', i)
+					d3.selectAll('path').attr('fill-opacity',0.2)
+    				d3.select('#c' + i.properties.ID_1).attr('fill-opacity', 1);
 				} )
 
 		})
 		.catch( error => { console.log(error) })
 		
+		vis.update(element);
+	}
 
+	update(element) {
+		const vis = this;
+
+		setInterval(function(){
+			vis.map.selectAll('path').transition()
+				.duration(2000)
+				.style('fill', function(d) {
+					return vis.color(Math.floor((Math.random() * 32) + 1));
+				});
+		}, 2000);
 	}
 }
 
