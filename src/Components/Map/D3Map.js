@@ -64,6 +64,7 @@ class D3Map {
 			console.log('CITIES', cities)
 			var cityPoints = vis.map.selectAll('circle').data(cities); 
 			var cityText = vis.map.selectAll('text').data(cities); 
+			var radius = d3.scaleLinear().domain([0,100]).range([5,30]);  
 	   
 			cityPoints.enter() 
 				.append('circle') 
@@ -73,8 +74,11 @@ class D3Map {
 				.attr('cy', function(d) {
 				   return vis.projection ([d.lon, d.lat])[1]
 				}) 
-				.attr('r', 4) 
-				.attr('fill', '#000000'); 
+				.attr('fill', '#f5f5f5')
+				.attr('fill-opacity', '.5')
+				.attr('stroke', 'black')
+				.attr('r', function(d) {return radius(d.tequila); }) 
+
 	   
 			cityText.enter() 
 				.append('text') 
@@ -85,7 +89,9 @@ class D3Map {
 				.attr('dx', 5) 
 				.attr('dy', 3) 
 				.text(function(d) {return d.name}); 
-		  }); 
+		  });
+
+
 		
 		vis.update(element);
 	}
