@@ -59,6 +59,33 @@ class D3Map {
 
 		})
 		.catch( error => { console.log(error) })
+
+		d3.csv('./data/cities.csv').then(function(cities) {
+			console.log('CITIES', cities)
+			var cityPoints = vis.map.selectAll('circle').data(cities); 
+			var cityText = vis.map.selectAll('text').data(cities); 
+	   
+			cityPoints.enter() 
+				.append('circle') 
+				.attr('cx', function(d) {
+				   return vis.projection ([d.lon, d.lat])[0]
+				})
+				.attr('cy', function(d) {
+				   return vis.projection ([d.lon, d.lat])[1]
+				}) 
+				.attr('r', 4) 
+				.attr('fill', '#000000'); 
+	   
+			cityText.enter() 
+				.append('text') 
+				.attr('x', function(d) {
+				   return vis.projection([d.lon, d.lat])[0]})
+				.attr('y', function(d) {
+				   return vis.projection([d.lon, d.lat])[1]}) 
+				.attr('dx', 5) 
+				.attr('dy', 3) 
+				.text(function(d) {return d.name}); 
+		  }); 
 		
 		vis.update(element);
 	}
