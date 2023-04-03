@@ -5,6 +5,7 @@ import Map from './Components/Map/MapWrapper';
 import Home from './Components/Home';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Container, Row, Navbar, Col, Nav } from 'react-bootstrap';
+import ObesityMap from './Components/ObesityMap/MapWrapper'
 
 function App() {
 	// TODO: move scatterplot data eventually
@@ -40,6 +41,9 @@ function App() {
 									<Nav.Link as={Link} to='/map'>
 										Map
 									</Nav.Link>
+									<Nav.Link as={Link} to='/map-obesity'>
+										State-Level Obesity
+									</Nav.Link>
 								</div>
 							</Col>
 						</Row>
@@ -52,6 +56,8 @@ function App() {
 						<Route path='/bar-chart' element={<ChartWrapper />} />
 						<Route path='/scatter-plot' element={<ScatterPlotWrapper data={scatterPlotData} />} />
 						<Route path='/map' element={<Map />} />
+						<Route path='/map-obesity' element={<ObesityMap />} />
+
 						<Route
 							render={function () {
 								return <p>Not found</p>;
